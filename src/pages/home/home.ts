@@ -153,9 +153,18 @@ export class HomePage {
 
       //MANDO A LA IMPRESORA
       var socket = new Socket();
-      socket.write(printer.getBuffer());
-      socket.shutdownWrite();
+      socket.open(
+        "127.0.0.1",
+        1234,
+        function() {
+          // invoked after successful opening of socket
+          socket.write(printer.getBuffer());
+          socket.shutdownWrite();
 
+        },
+        function(errorMessage) {
+          // invoked after unsuccessful opening of socket
+        });
     })
   }
 }
